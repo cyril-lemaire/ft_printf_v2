@@ -25,17 +25,20 @@ int			ft_write_uimax(t_printer *printer, uintmax_t n, int is_neg,
 				const char *base_repr);
 int			ft_write_signed(t_printer *printer, const char *base);
 int			ft_write_unsigned(t_printer *printer, const char *base);
+/*
 int			ft_write_pct(t_printer *printer);
 int			ft_write_c(t_printer *printer);
 int			ft_write_C(t_printer *printer);
 int			ft_write_s(t_printer *printer);
 int			ft_write_S(t_printer *printer);
+*/
 int			ft_write_d(t_printer *printer);
 int			ft_write_u(t_printer *printer);
+/*
 int			ft_write_b(t_printer *printer);
 int			ft_write_o(t_printer *printer);
 int			ft_write_x(t_printer *printer);
 int			ft_write_X(t_printer *printer);
 int			ft_write_p(t_printer *printer);
-
+*/
 #endif

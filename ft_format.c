@@ -77,7 +77,7 @@ static int	ft_read_size(const char *format, t_printer *printer)
 	return (read_size);
 }
 
-int		ft_format(t_printer *printer)
+int		ft_format(const char *format, t_printer *printer)
 {
 	int		read_size;
 	int		f_ret;

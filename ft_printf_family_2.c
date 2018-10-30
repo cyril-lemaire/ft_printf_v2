@@ -13,7 +13,7 @@ int				ft_vdprintf(int fd, const char *format, va_list args)
 	int			ret_val;
 
 	va_copy(args_cpy, args);
-	if ((printer = ft_vdprinter_new(fd, format, &args_cpy)) == NULL)
+	if ((printer = ft_vdprinter_new(fd, &args_cpy)) == NULL)
 		return (EALLOC);
 	ret_val = ft_print(format, &(printer->super));
 	va_end(args_cpy);

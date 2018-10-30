@@ -14,11 +14,11 @@ int							ft_not_implemented(t_printer *printer)
 static const t_printer_ft*	ft_get_writers(void)
 {
 	static const t_printer_ft	writers[sizeof(PRINTF_TYPES) - 1] = {
-		ft_write_pct,			// %
+//		ft_write_pct,			// %
 		ft_write_d,				// d
 		ft_write_d,				// i
 		ft_write_u,				// u
-		ft_write_b,				// b
+/*		ft_write_b,				// b
 		ft_write_o,				// o
 		ft_write_x,				// x
 		ft_write_X,				// X
@@ -29,7 +29,7 @@ static const t_printer_ft*	ft_get_writers(void)
 		ft_not_implemented,		// f
 		ft_not_implemented,		// g
 		ft_not_implemented,		// G
-		ft_not_implemented,		// a
+		ft_not_implemented,		// a*/
 		ft_not_implemented		// A
 	};
 	return (writers);

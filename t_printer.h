@@ -31,14 +31,13 @@ typedef struct	s_printer
 	char				size;
 	char				type;
 	va_list*			args;
-	char*				format;
 	char*				alloc_mem;
 	size_t				alloc_size;
 	t_printer_write		write;
 	t_printer_repeat	repeat;
 	t_printer_alloc		alloc;
 	t_printer_alloc		private_alloc;
-	t_printer_ft		endalloc;
+	t_printer_endalloc	endalloc;
 	t_printer_flush		flush;
 	t_printer_del		private_del;
 	int					written;
@@ -46,7 +45,6 @@ typedef struct	s_printer
 
 typedef int		(*t_printer_ft)(t_printer *printer);
 
-int			ft_printer_init(t_printer *printer, va_list *args,
-				const char *format);
+int			ft_printer_init(t_printer *printer, va_list *args);
 
 #endif

@@ -50,16 +50,12 @@ int			ft_write_unsigned(t_printer *printer, const char *base)
 	return (ft_write_uimax(printer, 0, arg, base));
 }
 
-int			ft_write_d(void *raw_printer)
+int			ft_write_d(t_printer *printer)
 {
-	t_printer *const	printer = (t_printer *const)raw_printer;
-
 	return (ft_write_signed(printer, "0123456789"));
 }
 
-int			ft_write_u(void *raw_printer)
+int			ft_write_u(t_printer *printer)
 {
-	t_printer *const	printer = (t_printer *const)raw_printer;
-
 	return (ft_write_unsigned(printer, "0123456789"));
 }

@@ -19,25 +19,23 @@ FLAGS := -Wall -Wextra -Werror
 
 CC := gcc
 
-SRC_FOLDER := .
+SRC := ./
+INCLUDES := ./
 
 SRC :=	ft_printf_family.c			\
-		ft_vdprintf.c				\
-		ft_vasprintf.c				\
+		ft_printf_family_2.c		\
 		ft_print.c					\
-		ft_tools_format.c			\
-		ft_tools_write_format.c		\
+		ft_format.c					\
+		ft_write_format.c			\
 		ft_tools_atoi.c				\
 		ft_tools_imaxabs.c			\
 		ft_tools_write_uimax.c		\
-		ft_tools_write_types_1.c	\
-		ft_tools_write_types_2.c	\
-		ft_tools_write_types_3.c	\
-		ft_tools_write_types_4.c	\
+		ft_writers_int.c			\
 		t_printer.c					\
 		t_vdprinter.c				\
+		t_vdprinter_2.c				\
 		t_vasprinter.c				\
-		t_vasprinter_mem.c			\
+		t_vasprinter_2.c			\
 
 TEST_NAME :=	printf_tester
 TEST_FILES :=	tester.c
@@ -49,7 +47,7 @@ OBJ := ${SRC:.c=.o}
 all: ${NAME}
 
 %.o: ${SRC_FOLDER}/%.c
-	${CC} -c -I${SRC_FOLDER} ${FLAGS} -c -o $@ $<
+	${CC} -c -I${INCLUDES} ${FLAGS} -c -o $@ $<
 
 ${NAME}: ${LIBFT_FOLDER}/${LIBFT_NAME} ${PRINTF_NAME}
 	ar -rcT ${NAME} ${LIBFT_FOLDER}/${LIBFT_NAME} ${PRINTF_NAME}
@@ -72,7 +70,7 @@ fclean: clean
 re: fclean all
 
 test: ${NAME}
-	${CC} -I${SRC_FOLDER} ${TEST_FILES} ${NAME} -o ${TEST_NAME}
+	${CC} -I${INCLUDES} ${TEST_FILES} ${NAME} -o ${TEST_NAME} && ./${TEST_NAME} | less
 
 obj: ${OBJ}
 

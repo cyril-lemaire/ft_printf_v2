@@ -1,7 +1,7 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-int		ft_print(t_printer *printer)
+int		ft_print(const char *format, t_printer *printer)
 {
 	char	*next_format;
 	int		f_ret;
