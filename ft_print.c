@@ -6,6 +6,7 @@ int		ft_print(const char *format, t_printer *printer)
 	char	*next_format;
 	int		f_ret;
 
+	printf("printing \"%s\"", format);fflush(stdout);
 	if (format == NULL)
 		return (EFORMAT);
 	while ((next_format = ft_strchr(format, '%')) != NULL)

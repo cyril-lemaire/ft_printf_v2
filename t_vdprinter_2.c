@@ -1,5 +1,6 @@
 #include "libft/libft.h"
 #include "t_vdprinter.h"
+#include "stdlib.h"
 
 t_vdprinter*	ft_vdprinter_new(int fd, va_list *args)
 {

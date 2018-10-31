@@ -20,7 +20,7 @@ int				ft_vdprintf(int fd, const char *format, va_list args)
 	printer->del(printer);
 	return (ret_val);
 }
-/*
+
 int				ft_vasprintf(char **strp, const char *format, va_list args)
 {
 	t_vasprinter	*printer;
@@ -28,14 +28,14 @@ int				ft_vasprintf(char **strp, const char *format, va_list args)
 	int				ret_val;
 
 	va_copy(args_cpy, args);
-	if ((printer = ft_vasprinter_new(strp, format, &args_cpy)) == NULL)
+	if ((printer = ft_vasprinter_new(strp, &args_cpy)) == NULL)
 		return (EALLOC);
 	ret_val = ft_print(format, &(printer->super));
 	va_end(args_cpy);
 	printer->del(printer);
 	return (ret_val);
 }
-
+/*
 int				ft_vsnprintf(char *str, int size, const char *format, va_list args)
 {
 	t_vsnprinter	*printer;

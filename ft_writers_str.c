@@ -1,41 +1,51 @@
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include "t_printer.h"
-# include <stdarg.h>
-# include <stddef.h>
-# include <stdint.h>
-# define PRINTF_TYPES "%diuboxXcCsSpfgGaA{"
-# define EALLOC -1
-# define EWRITE -2
-# define EFORMAT -3
-#include <stdlib.h>	// debug only
-#include <stdio.h>	// debug only
-#include <unistd.h>	// debug only
+#include "libft/libft.h"
+#include "ft_printf.h"
+#include <wchar.h>
+#include <stdarg.h>
+#include <stddef.h>
+/*
+int			ft_write_c(t_printer *printer)
+{
+	char				c;
 
-int			ft_printf(const char *format, ...);
-int			ft_dprintf(int fd, const char *format, ...);
-int			ft_vprintf(const char *format, va_list args);
-int			ft_vdprintf(int fd, const char *format, va_list args);
-int			ft_print(const char *format, t_printer *printer);
-int			ft_format(const char *format, t_printer *printer);
-int			ft_write_format(t_printer *printer);
-intmax_t	ft_imaxabs(intmax_t n);
-int			ft_tools_atoi(const char *str, int *ans);
-int			ft_write_uimax(t_printer *printer, uintmax_t n, int is_neg,
-				const char *base_repr);
-int			ft_write_signed(t_printer *printer, const char *base);
-int			ft_write_unsigned(t_printer *printer, const char *base);
-int			ft_write_pct(void *raw_printer);
-int			ft_write_c(void *raw_printer);
-int			ft_write_C(void *raw_printer);
-int			ft_write_s(void *raw_printer);
-int			ft_write_S(void *raw_printer);
-int			ft_write_d(void *raw_printer);
-int			ft_write_u(void *raw_printer);
-int			ft_write_b(void *raw_printer);
-int			ft_write_o(void *raw_printer);
-int			ft_write_x(void *raw_printer);
-int			ft_write_X(void *raw_printer);
-int			ft_write_p(void *raw_printer);
+	if (ft_strchr("lwL", printer->size) != NULL)
+		return (ft_write_C(printer));
+	c = (char)va_arg(*printer->args, int);
+	return (printer->write(printer, &c, sizeof(char)));
+}
 
-#endif
+int			ft_write_C(t_printer *printer)
+{
+	return (ft_putwc(printer, va_arg(*printer->args, wchar_t)));
+}
+
+int			ft_write_s(t_printer *printer)
+{
+	char				*arg;
+
+	if (ft_strchr("lwL", printer->size))
+		return (ft_write_S(printer));
+	arg = va_arg(*printer->args, char*);
+	if (arg == NULL)
+		return (printer->write(printer, "(null)", sizeof("(null)") - 1));
+	return (printer->write(printer, arg, ft_strlen(arg)));
+}
+
+int			ft_write_S(t_printer *printer)
+{
+	wchar_t				*arg;
+	size_t				i;
+
+	arg = va_arg(*printer->args, wchar_t*);
+	if (arg == NULL)
+		return (printer->write(printer, "(null)", sizeof("(null)") - 1));
+	i = 0;
+	while (arg[i] != L'\0')
+		ft_putwc(printer, arg[i++]);
+	return (i);
+}
+*/
+int			ft_write_pct(t_printer *printer)
+{
+	return (printer->write(printer, "%", 1));
+}

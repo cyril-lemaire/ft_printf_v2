@@ -14,15 +14,15 @@ int							ft_not_implemented(t_printer *printer)
 static const t_printer_ft*	ft_get_writers(void)
 {
 	static const t_printer_ft	writers[sizeof(PRINTF_TYPES) - 1] = {
-//		ft_write_pct,			// %
+		ft_write_pct,			// %
 		ft_write_d,				// d
 		ft_write_d,				// i
 		ft_write_u,				// u
-/*		ft_write_b,				// b
+		ft_write_b,				// b
 		ft_write_o,				// o
 		ft_write_x,				// x
 		ft_write_X,				// X
-		ft_write_c,				// c
+/*		ft_write_c,				// c
 		ft_write_C,				// C
 		ft_write_s,				// s
 		ft_write_S,				// S
@@ -45,7 +45,10 @@ int							ft_write_format(t_printer *printer)
 	while (PRINTF_TYPES[i] != '\0')
 	{
 		if (printer->type == PRINTF_TYPES[i])
+		{
+			printf("calling format for %c\n", PRINTF_TYPES[i]);
 			return (((f_ret = funcs[i](printer)) < 0) ? -2 : f_ret);
+		}
 		++i;
 	}
 	write(2, "Error! unknown conversion type character ‘",

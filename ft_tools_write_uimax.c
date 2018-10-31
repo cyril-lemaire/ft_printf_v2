@@ -30,7 +30,7 @@ static int          ft_uimaxlen(uintmax_t n, size_t base)
 	return (res);
 }
 
-static int			ft_printuimax(t_printer *printer, unsigned long long n,
+static int			ft_printuimax(t_printer *printer, uintmax_t n,
 						int n_len, const char *base_repr)
 {
 	const int	base = ft_strlen(base_repr);
@@ -38,7 +38,7 @@ static int			ft_printuimax(t_printer *printer, unsigned long long n,
 
 	if ((dst = printer->alloc(printer, n_len)) == NULL)
 	{
-		printf("printer (BUFF_SIZE) couldn't fit an uintmax nor allocate it!");fflush(stdout);
+		printf("printer (BUFF_SIZEB) couldn't fit an uintmax nor allocate it!");fflush(stdout);
 		return (EALLOC);
 	}
 	dst[--n_len] = base_repr[n % base];
@@ -77,12 +77,12 @@ int					ft_write_uimax(t_printer *printer, uintmax_t n,
 	int			filler_len;
 	int			ret_val;
 
+	printf("Writing number %s%ju (base %s)\n", is_neg ? "-" : "", n, base_repr);
 	if (printer->flags.prec && printer->prec == 0 && n == 0)
-		return (0);
+		return (0); 
 	printer->width = (int)ft_max(printer->flags.width ?
 		printer->width : 0, n_len + (sign != '\0'));
 	filler_len = printer->width - n_len - (sign != '\0');
-	printf("\nWriting number: %zu\n", n);
 //	printf("\nfiller: \'%c\'*%d\tsign: %c\tn_len: %d\tbase: %s\n",
 //		   filler, filler_len, sign, n_len, base_repr);fflush(stdout);
     ret_val = 0;

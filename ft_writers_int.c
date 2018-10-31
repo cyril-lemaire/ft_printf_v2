@@ -24,7 +24,7 @@ int			ft_write_signed(t_printer *printer, const char *base)
 		arg = (intmax_t)va_arg(*printer->args, ptrdiff_t);
 	else
 		arg = (intmax_t)va_arg(*printer->args, int);
-	return (ft_write_uimax(printer, arg < 0, (uintmax_t)ft_imaxabs(arg), base));
+	return (ft_write_uimax(printer, ft_imaxabs(arg), arg < 0, base));
 }
 
 int			ft_write_unsigned(t_printer *printer, const char *base)
@@ -47,7 +47,7 @@ int			ft_write_unsigned(t_printer *printer, const char *base)
 		arg = (uintmax_t)va_arg(*printer->args, ptrdiff_t);
 	else
 		arg = (uintmax_t)va_arg(*printer->args, unsigned);
-	return (ft_write_uimax(printer, 0, arg, base));
+	return (ft_write_uimax(printer, arg, 0, base));
 }
 
 int			ft_write_d(t_printer *printer)
@@ -57,5 +57,6 @@ int			ft_write_d(t_printer *printer)
 
 int			ft_write_u(t_printer *printer)
 {
+	printf("Writing unsigned\n");
 	return (ft_write_unsigned(printer, "0123456789"));
 }

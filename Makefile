@@ -31,11 +31,11 @@ SRC :=	ft_printf_family.c			\
 		ft_tools_imaxabs.c			\
 		ft_tools_write_uimax.c		\
 		ft_writers_int.c			\
+		ft_writers_int_2.c			\
+		ft_writers_str.c			\
 		t_printer.c					\
 		t_vdprinter.c				\
 		t_vdprinter_2.c				\
-		t_vasprinter.c				\
-		t_vasprinter_2.c			\
 
 TEST_NAME :=	printf_tester
 TEST_FILES :=	tester.c
@@ -49,7 +49,12 @@ all: ${NAME}
 %.o: ${SRC_FOLDER}/%.c
 	${CC} -c -I${INCLUDES} ${FLAGS} -c -o $@ $<
 
+${NAME}_alt: ${LIBFT_FOLDER}/${LIBFT_NAME} ${PRINTF_NAME}
+	libtool --mode=link cc -static -o ${NAME} ${LIBFT_FOLDER}/${LIBFT_NAME} \
+		${PRINTF_NAME}
+
 ${NAME}: ${LIBFT_FOLDER}/${LIBFT_NAME} ${PRINTF_NAME}
+	rm -f ${NAME}
 	ar -rcT ${NAME} ${LIBFT_FOLDER}/${LIBFT_NAME} ${PRINTF_NAME}
 
 ${PRINTF_NAME}: ${OBJ}
