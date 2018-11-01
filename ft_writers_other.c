@@ -27,6 +27,6 @@ int			ft_write_p(t_printer *printer)
 	arg = va_arg(*printer->args, void*);
 	if (arg == NULL)
 		return (printer->write(printer, "(nil)", sizeof("(nil)") - 1));
-	return (printer->write("0x") +
+	return (printer->write(printer, "0x", sizeof("0x") - 1) +
 			ft_write_uimax(printer, (uintmax_t)arg, 0, "0123456789abcdef"));
 }

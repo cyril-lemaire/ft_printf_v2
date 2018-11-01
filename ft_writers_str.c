@@ -6,10 +6,9 @@
 
 static int	ft_tools_printwc(t_printer *printer, wchar_t wc)
 {
-	char				s[MB_CUR_MAX + 1];
+	char				s[MB_CUR_MAX];
 	int					f_ret;
 
-	bzero(s, MB_CUR_MAX);
 	if ((f_ret = ft_wctomb(s, wc)) < 1)
 		return (EFORMAT);
 	return (printer->write(printer, s, f_ret));

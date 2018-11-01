@@ -18,6 +18,8 @@ static int	ft_read_flag(const char *format, t_printer *printer)
 		printer->flags.hash = ++read_size;
 	else if (format[0] == '0')
 		printer->flags.zero = ++read_size;
+	else if (format[0] == ' ')
+		printer->flags.space = ++read_size;
 	return (read_size);
 }
 
@@ -32,9 +34,9 @@ static int	ft_read_width(const char *format, t_printer *printer)
 		if (printer->width < 0)
 		{
 			printer->flags.minus = 1;
-			printer->width *= -1;
+			printer->width = -printer->width;
 		}
-		return (2);
+		return (1);
 	}
 	return (ft_tools_atoi(format, &printer->width));
 }
@@ -47,7 +49,7 @@ static int		ft_read_prec(const char *format, t_printer *printer)
 	if (format[1] == '*')
 	{
 		printer->prec = va_arg(*printer->args, int);
-		return (2);
+		return (1);
 	}
 	return (1 + ft_tools_atoi(format + 1, &printer->prec));
 }
@@ -71,7 +73,7 @@ static int	ft_read_size(const char *format, t_printer *printer)
 			printer->size = (format[1] == '3') ? 'I' - 32 : 'I' - 64;
 		}
 	}
-	else if (ft_strchr("lhIjz", format[0]) == NULL)
+	else if (ft_strchr("lhIjz", format[0]) == NULL || format[0] == '\0')
 		read_size = 0;
 	printer->size = (read_size) ? printer->size : '\0';
 	return (read_size);
@@ -91,9 +93,22 @@ int		ft_format(const char *format, t_printer *printer)
 	read_size += ft_read_size(format + read_size, printer);
 	if ((printer->type = format[read_size]) != '\0')
 		++read_size;
+
+	printf("\nFlags: -%d +%d z%d s%d #%d\n",
+		  printer->flags.minus,
+		  printer->flags.plus,
+		  printer->flags.zero,
+		  printer->flags.space,
+		  printer->flags.hash
+		  );fflush(stdout);
+	printf("\nWidth: %s (%d)\n", printer->flags.width ? "Yes" : "No",
+		   printer->width);fflush(stdout);
+	printf("\nPrecision: %s (%d)\n", printer->flags.prec ? "Yes" : "No",
+		   printer->prec);fflush(stdout);
+	printf("\nSize: %c\n", printer->size);fflush(stdout);
+	printf("\nType: %c\n", printer->type);fflush(stdout);
+
 	if ((f_ret = ft_write_format(printer)) > 0)
 		printer->written += f_ret;
-	else if (f_ret == EFORMAT)
-		printer->written += printer->write(printer, format, read_size);
-	return ((f_ret >= 0 || f_ret == EFORMAT) ? read_size : f_ret);
+	return ((f_ret >= 0) ? read_size : f_ret);
 }

@@ -26,6 +26,7 @@ static const t_printer_ft*	ft_get_writers(void)
 		ft_write_C,				// C
 		ft_write_s,				// s
 		ft_write_S,				// S
+		ft_write_p,				// p
 		ft_not_implemented,		// f
 		ft_not_implemented,		// g
 		ft_not_implemented,		// G
@@ -49,5 +50,5 @@ int							ft_write_format(t_printer *printer)
 			return (((f_ret = funcs[i](printer)) < 0) ? -2 : f_ret);
 		++i;
 	}
-	return (EFORMAT);
+	return (EALLOC);
 }
