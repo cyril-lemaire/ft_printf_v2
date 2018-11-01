@@ -16,3 +16,10 @@ int			ft_write_B(t_printer *printer)
 		return (printer->write(printer, arg, printer->width));
 	return (0);
 }
+
+int			ft_write_p(t_printer *printer)
+{
+	printer->flags.hash = 1;
+	printer->size = 'j';
+	return (ft_write_x(printer));
+}
