@@ -19,7 +19,14 @@ int			ft_write_B(t_printer *printer)
 
 int			ft_write_p(t_printer *printer)
 {
+	void	*arg;
+
 	printer->flags.hash = 1;
-	printer->size = 'j';
-	return (ft_write_x(printer));
+	printer->flags.plus = 0;
+	printer->flags.space = 0;
+	arg = va_arg(*printer->args, void*);
+	if (arg == NULL)
+		return (printer->write(printer, "(nil)", sizeof("(nil)") - 1));
+	return (printer->write("0x") +
+			ft_write_uimax(printer, (uintmax_t)arg, 0, "0123456789abcdef"));
 }
