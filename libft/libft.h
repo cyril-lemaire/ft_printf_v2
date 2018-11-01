@@ -96,5 +96,6 @@ int				ft_lstdelnext(t_list *node, void (*del)(void*, size_t));
 char*			ft_stradd(const char *dest, const char *src);
 char*			ft_stracat(char **dest, const char *src);
 size_t			ft_wcslen(const wchar_t *s);
+int				ft_wctomb(char *s, wchar_t wchar);
 
 #endif

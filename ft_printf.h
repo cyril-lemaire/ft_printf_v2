@@ -8,9 +8,6 @@
 # define EALLOC -1
 # define EWRITE -2
 # define EFORMAT -3
-#include <stdlib.h>	// debug only
-#include <stdio.h>	// debug only
-#include <unistd.h>	// debug only
 
 int			ft_printf(const char *format, ...);
 int			ft_dprintf(int fd, const char *format, ...);
