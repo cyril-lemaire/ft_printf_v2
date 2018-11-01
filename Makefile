@@ -33,6 +33,7 @@ SRC :=	ft_printf_family.c			\
 		ft_writers_int.c			\
 		ft_writers_int_2.c			\
 		ft_writers_str.c			\
+		ft_writers_other.c			\
 		t_printer.c					\
 		t_vdprinter.c				\
 		t_vdprinter_2.c				\

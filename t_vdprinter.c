@@ -23,10 +23,7 @@ int				ft_vdprinter_write(void *raw_this, const char *s, size_t size)
 	if (size >= BUFF_SIZE)
 	{
 		if ((flush_ret = this->super.flush(this)) < 0)
-		{
-			printf("Error while flushing vdprinter! (%d)", flush_ret);fflush(stdout);
 			return (EWRITE);
-		}
 		return (write(this->fd, s, size));
 	}
 	to_write = size;
@@ -36,10 +33,7 @@ int				ft_vdprinter_write(void *raw_this, const char *s, size_t size)
 		this->index = BUFF_SIZE;
 		to_write -= capacity;
 		if ((flush_ret = this->super.flush(this)) < 0)
-		{
-			printf("Error while flushing vdprinter! (%d)", flush_ret);fflush(stdout);
 			return (EWRITE);
-		}
 	}
 	ft_memcpy(this->mem + this->index, s, to_write);
 	this->index += to_write;

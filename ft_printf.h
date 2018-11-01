@@ -4,7 +4,7 @@
 # include <stdarg.h>
 # include <stddef.h>
 # include <stdint.h>
-# define PRINTF_TYPES "%diuboxXcCsSpfgGaA{"
+# define PRINTF_TYPES "%diuboxXcCsSpfgGaAB"
 # define EALLOC -1
 # define EWRITE -2
 # define EFORMAT -3
@@ -32,11 +32,11 @@ int			ft_write_b(t_printer *printer);
 int			ft_write_o(t_printer *printer);
 int			ft_write_x(t_printer *printer);
 int			ft_write_X(t_printer *printer);
-/*
 int			ft_write_c(t_printer *printer);
 int			ft_write_C(t_printer *printer);
 int			ft_write_s(t_printer *printer);
 int			ft_write_S(t_printer *printer);
 int			ft_write_p(t_printer *printer);
-*/
+int			ft_write_B(t_printer *printer);
+
 #endif

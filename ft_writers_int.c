@@ -57,6 +57,5 @@ int			ft_write_d(t_printer *printer)
 
 int			ft_write_u(t_printer *printer)
 {
-	printf("Writing unsigned\n");
 	return (ft_write_unsigned(printer, "0123456789"));
 }

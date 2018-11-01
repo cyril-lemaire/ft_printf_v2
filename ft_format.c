@@ -84,7 +84,6 @@ int		ft_format(const char *format, t_printer *printer)
 
 	read_size = 1;
 	ft_bzero(&printer->flags, sizeof(printer->flags));
-	printf("\nFormatting \"%s\"\n", format);fflush(stdout);		// //
 	while ((f_ret = ft_read_flag(format + read_size, printer)) > 0)
 		read_size += f_ret;
 	read_size += ft_read_width(format + read_size, printer);
@@ -92,21 +91,6 @@ int		ft_format(const char *format, t_printer *printer)
 	read_size += ft_read_size(format + read_size, printer);
 	if ((printer->type = format[read_size]) != '\0')
 		++read_size;
-///*
-	printf("\nFlags: -%d +%d z%d s%d #%d\n",
-		  printer->flags.minus,
-		  printer->flags.plus,
-		  printer->flags.zero,
-		  printer->flags.space,
-		  printer->flags.hash
-		  );fflush(stdout);
-	printf("\nWidth: %s (%d)\n", printer->flags.width ? "Yes" : "No",
-		   printer->width);fflush(stdout);
-	printf("\nPrecision: %s (%d)\n", printer->flags.prec ? "Yes" : "No",
-		   printer->prec);fflush(stdout);
-	printf("\nSize: %c\n", printer->size);fflush(stdout);
-	printf("\nType: %c\n", printer->type);fflush(stdout);
-//*/
 	if ((f_ret = ft_write_format(printer)) > 0)
 		printer->written += f_ret;
 	else if (f_ret == EFORMAT)

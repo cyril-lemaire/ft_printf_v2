@@ -85,6 +85,7 @@ SRC = ft_atoi.c			\
 	ft_stracat.c		\
 	ft_stradd.c			\
 	ft_wcslen.c			\
+	ft_wctomb.c			\
 
 OBJ = ${SRC:.c=.o}
 
