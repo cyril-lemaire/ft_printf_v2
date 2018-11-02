@@ -10,8 +10,6 @@ static int		ft_vasprinter_flush(void *raw_this)
 	int						tmp;
 	t_list					*node;
 
-	write(1, this->mem->content, this->index);
-	write(1, "\n", 1);
 	*(this->dstp) = (char*)malloc(BUFF_SIZE * (this->mem_size - 1)
 			+ this->index + 1);
 	if (*(this->dstp) == NULL)

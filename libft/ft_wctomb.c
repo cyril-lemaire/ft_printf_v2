@@ -1,5 +1,4 @@
 #include <stddef.h>
-#include <stdio.h>
 
 int		ft_wctomb(char *s, wchar_t wchar)
 {
