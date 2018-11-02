@@ -2,6 +2,7 @@
 #include "libft/libft.h"
 #include <stdarg.h>
 #include <stddef.h>
+#include <unistd.h>
 #include <stdint.h>
 
 int			ft_write_signed(t_printer *printer, const char *base)
@@ -19,7 +20,11 @@ int			ft_write_signed(t_printer *printer, const char *base)
 	else if (printer->size == 'j')
 		arg = (intmax_t)va_arg(*printer->args, intmax_t);
 	else if (printer->size == 'z')
+#ifdef _POSIX_VERSION
 		arg = (intmax_t)va_arg(*printer->args, ssize_t);
+#else
+		arg = (intmax_t)va_arg(*printer->args, ptrdiff_t);
+#endif
 	else if (printer->size == 't')
 		arg = (intmax_t)va_arg(*printer->args, ptrdiff_t);
 	else

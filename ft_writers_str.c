@@ -2,6 +2,7 @@
 #include "ft_printf.h"
 #include <wchar.h>
 #include <stdarg.h>
+#include <stdlib.h>
 #include <stddef.h>
 
 static int	ft_tools_printwc(t_printer *printer, wchar_t wc)

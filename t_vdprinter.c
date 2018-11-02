@@ -1,6 +1,7 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 #include "t_vdprinter.h"
+#include <stdlib.h>
 #include <unistd.h>
 
 static int		ft_vdprinter_flush(void *raw_this)

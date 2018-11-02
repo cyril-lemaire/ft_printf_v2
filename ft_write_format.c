@@ -5,10 +5,8 @@
 
 int							ft_not_implemented(t_printer *printer)
 {
-	write(2, "Not implemented type '", sizeof("Not implemented type '") - 1);
-	write(2, &printer->type, 1);
-	write(2, "' !\n", sizeof("' !\n") - 1);
-	return (0);
+	(void)printer;
+	return (-1);
 }
 
 static const t_printer_ft*	ft_get_writers(void)
