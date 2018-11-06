@@ -35,6 +35,8 @@ SRC :=	ft_printf_family.c			\
 		t_printer.c					\
 		t_vdprinter.c				\
 		t_vdprinter_2.c				\
+		t_vasprinter.c				\
+		t_vasprinter_2.c			\
 
 LIBFT_SRC :=	ft_atoi.c	\
 		ft_bzero.c			\
@@ -122,7 +124,7 @@ OBJ := ${SRC:.c=.o}
 all: ${NAME}
 
 %.o: ${SRC_FOLDER}/%.c
-	${CC} -c -I${INCLUDES} ${FLAGS} -c -o $@ $<
+	${CC} -c -I${INCLUDES} ${FLAGS} -o $@ $<
 
 ${NAME}_alt: ${LIBFT_FOLDER}/${LIBFT_NAME} ${PRINTF_NAME}
 	libtool --mode=link cc -static -o ${NAME} ${LIBFT_FOLDER}/${LIBFT_NAME} \
@@ -130,11 +132,11 @@ ${NAME}_alt: ${LIBFT_FOLDER}/${LIBFT_NAME} ${PRINTF_NAME}
 
 ${NAME}_alt2: ${LIBFT_FOLDER}/${LIBFT_NAME} ${PRINTF_NAME}
 	rm -f ${NAME}
-	ar -rcT ${NAME} ${LIBFT_FOLDER}/${LIBFT_NAME} ${PRINTF_NAME}
+	ar -rcT $@ $^
 
 ${NAME}: ${OBJ}
 	@echo '@ar rcs ${PRINTF_NAME} [OBJ FILES]'
-	@ar rcs ${NAME} $^
+	@ar rcs $@ $^
 
 ${PRINTF_NAME}: ${OBJ}
 	@echo '@ar rcs ${PRINTF_NAME} [OBJ FILES]'

@@ -29,18 +29,18 @@ int		ft_vprintf(const char *format, va_list args)
 {
 	return (ft_vdprintf(1, format, args));
 }
-/*
-int		ft_asprintf(char **ret, const char *format, ...)
+
+int		ft_asprintf(char **dstp, const char *format, ...)
 {
 	va_list		args;
 	int			res;
 
 	va_start(args, format);
-	res = ft_vasprintf(ret, format, args);
+	res = ft_vasprintf(dstp, format, args);
 	va_end(args);
 	return (res);
 }
-
+/*
 int		ft_snprintf(char *s, size_t size, const char *format, ...)
 {
 	va_list		args;

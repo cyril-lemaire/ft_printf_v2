@@ -5,7 +5,34 @@
 #include "t_vsnprinter.h"
 #include <stddef.h>
 #include <stdarg.h>
+#include <stdlib.h>	// debug
 
+int				ft_vdprintf(int fd, const char *format, va_list args)
+{
+	char	*formatted;
+	int		ret_val;
+
+	ret_val = ft_vasprintf(&formatted, format, args);
+	write(fd, formatted, ft_strlen(formatted));
+	free(formatted);
+	return (ret_val);
+}
+
+int				ft_vasprintf(char **dstp, const char *format, va_list args)
+{
+	t_vasprinter	*printer;
+	va_list			args_cpy;
+	int				ret_val;
+
+	va_copy(args_cpy, args);
+	if ((printer = ft_vasprinter_new(dstp, &args_cpy)) == NULL)
+		return (EALLOC);
+	ret_val = ft_print(format, &(printer->super));
+	va_end(args_cpy);
+	printer->del(printer);
+	return (ret_val);
+}
+/*
 int				ft_vdprintf(int fd, const char *format, va_list args)
 {
 	t_vdprinter	*printer;
@@ -14,21 +41,6 @@ int				ft_vdprintf(int fd, const char *format, va_list args)
 
 	va_copy(args_cpy, args);
 	if ((printer = ft_vdprinter_new(fd, &args_cpy)) == NULL)
-		return (EALLOC);
-	ret_val = ft_print(format, &(printer->super));
-	va_end(args_cpy);
-	printer->del(printer);
-	return (ret_val);
-}
-/*
-int				ft_vasprintf(char **strp, const char *format, va_list args)
-{
-	t_vasprinter	*printer;
-	va_list			args_cpy;
-	int				ret_val;
-
-	va_copy(args_cpy, args);
-	if ((printer = ft_vasprinter_new(strp, &args_cpy)) == NULL)
 		return (EALLOC);
 	ret_val = ft_print(format, &(printer->super));
 	va_end(args_cpy);

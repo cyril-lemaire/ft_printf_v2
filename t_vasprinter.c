@@ -21,7 +21,7 @@ static int		ft_vasprinter_flush(void *raw_this)
 		ft_memcpy(*(this->dstp) + i, node->content, BUFF_SIZE);
 		i += BUFF_SIZE;
 	}
-	ft_memcpy(*(this->dstp) + i, node->content, this->index);
+	ft_memcpy(*this->dstp + i, node->content, this->index);
 	*this->dstp[i + this->index] = '\0';
 	return (1);
 }

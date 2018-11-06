@@ -13,6 +13,8 @@ int			ft_printf(const char *format, ...);
 int			ft_dprintf(int fd, const char *format, ...);
 int			ft_vprintf(const char *format, va_list args);
 int			ft_vdprintf(int fd, const char *format, va_list args);
+int			ft_asprintf(char **dstp, const char *format, ...);
+int			ft_vasprintf(char **dstp, const char *format, va_list args);
 int			ft_print(const char *format, t_printer *printer);
 int			ft_format(const char *format, t_printer *printer);
 int			ft_write_format(t_printer *printer);
