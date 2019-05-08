@@ -23,11 +23,12 @@ INCLUDES := ./
 SRC :=	ft_printf_family.c			\
 		ft_printf_family_2.c		\
 		ft_print.c					\
-		ft_format.c					\
-		ft_write_format.c			\
+		ft_convert.c				\
+		ft_write_conversion.c		\
 		ft_tools_atoi.c				\
 		ft_tools_imaxabs.c			\
 		ft_tools_write_uimax.c		\
+		ft_tools_write_str.c		\
 		ft_writers_int.c			\
 		ft_writers_int_2.c			\
 		ft_writers_str.c			\
@@ -58,6 +59,7 @@ LIBFT_SRC :=	ft_atoi.c	\
 		ft_strdup.c			\
 		ft_strlcat.c		\
 		ft_strlen.c			\
+		ft_strnlen.c		\
 		ft_strncat.c		\
 		ft_strncmp.c		\
 		ft_strncpy.c		\
@@ -112,6 +114,7 @@ LIBFT_SRC :=	ft_atoi.c	\
 		ft_stradd.c			\
 		ft_wcslen.c			\
 		ft_wctomb.c			\
+		ft_wclen.c			\
 
 SRC += ${foreach src,${LIBFT_SRC},${LIBFT_FOLDER}/${src}}
 TEST_NAME :=	printf_tester

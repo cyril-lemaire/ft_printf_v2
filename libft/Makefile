@@ -32,6 +32,7 @@ SRC = ft_atoi.c			\
 	ft_strdup.c			\
 	ft_strlcat.c		\
 	ft_strlen.c			\
+	ft_strnlen.c		\
 	ft_strncat.c		\
 	ft_strncmp.c		\
 	ft_strncpy.c		\
@@ -86,6 +87,7 @@ SRC = ft_atoi.c			\
 	ft_stradd.c			\
 	ft_wcslen.c			\
 	ft_wctomb.c			\
+	ft_wclen.c			\
 
 OBJ = ${SRC:.c=.o}
 

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_wclen.c                                        :+:      :+:    :+:    */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clemaire <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,14 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include <stddef.h>
 
-size_t	ft_strlen(const char *s)
+int		ft_wclen(wchar_t wc)
 {
-	size_t		i;
-
-	i = 0;
-	while (s[i] != '\0')
-		++i;
-	return (i);
+	if (wc < 0x80)
+		return (1);
+	if (wc < 0x800)
+		return (2);
+	if (wc < 0x10000)
+		return (3);
+	if (wc < 0xFFFF)
+		return (4);
+	return (-1);
 }

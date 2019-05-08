@@ -72,9 +72,10 @@ static char*	ft_vasprinter_alloc(void *raw_this, size_t size)
 	size_t					capacity;
 
 	if (size > (capacity = BUFF_SIZE - this->index))
-		return (NULL);
+		return (ft_printer_alloc(raw_this, size));
 	dst = this->mem->content + this->index;
 	this->index += size;
+	this->super.alloc_size = size;
 	return (dst);
 }
 
@@ -92,7 +93,7 @@ int				ft_vasprinter_init(t_vasprinter *printer, char **dstp,
 	ft_printer_init(&(printer->super), args);
 	printer->super.write = ft_vasprinter_write;
 	printer->super.repeat = ft_vasprinter_repeat;
-	printer->super.private_alloc = ft_vasprinter_alloc;
+	printer->super.alloc = ft_vasprinter_alloc;
 	printer->super.flush = ft_vasprinter_flush;
 	printer->dstp = dstp;
 	printer->del = ft_vasprinter_del;

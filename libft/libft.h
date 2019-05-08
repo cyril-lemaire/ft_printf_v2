@@ -26,6 +26,7 @@ char*			ft_strncpy(char *dst, const char *src, size_t len);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t			ft_strlen(const char *s);
+size_t			ft_strnlen(const char *s, size_t n);
 char*			ft_strdup(const char *s);
 void			ft_bzero(void *s, size_t n);
 void*			ft_memchr(const void *s, int c, size_t n);
@@ -97,5 +98,6 @@ char*			ft_stradd(const char *dest, const char *src);
 char*			ft_stracat(char **dest, const char *src);
 size_t			ft_wcslen(const wchar_t *s);
 int				ft_wctomb(char *s, wchar_t wchar);
+int				ft_wclen(wchar_t wchar);
 
 #endif

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strnlen.c                                        :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clemaire <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,12 +12,12 @@
 
 #include <string.h>
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strnlen(const char *s, size_t n)
 {
 	size_t		i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (i < n && s[i] != '\0')
 		++i;
 	return (i);
 }
