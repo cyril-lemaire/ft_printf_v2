@@ -59,6 +59,7 @@ int		test_wctomb(wchar_t wc)
 	printf("| => %d\n\n", len); fflush(stdout);
 	return (len);
 }
+
 /*
 %-5.3s LYDI == |LYD  |
 % 4.5i 42 == | 00042|
@@ -92,8 +93,19 @@ int		main(int argc, char **argv)
 	test_print("wchar: '%lc'", L'L');
 	test_print("wchar string: '%S'", L"Large string");
 	test_print("wchar string: '%ls'", L"Large string");
+	test_print("%4i", 42);
+	test_print("%.5i", 42);
+	test_print("%04i", 42);
+	test_print("%0.5i", 42);
+	test_print("%+i", 42);
+	test_print("%+.5i", 42);
+	test_print("%+4i", 42);
+	test_print("%-i", 42);
+	test_print("%-.5i", 42);
+	test_print("%-4i", 42);
 	test_print("% 4.5i", 42);
 	test_print("%04.5i", 42);
+	test_print("%4.3i", 42);
 	test_print("%04.3i", 42);
 	test_print("%04.2i", 42);
 	test_print("%-5.3s", "LYDI");

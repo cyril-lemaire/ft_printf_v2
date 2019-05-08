@@ -9,18 +9,16 @@ int			ft_tools_putstr(t_printer *printer, const void *str, size_t size)
 	size_t		i;
 	int			f_ret;
 
-	printf("Computing string size.\n");fflush(stdout);
 	i = ft_strnlen(s, size);
 	while(i < size && s[i] != '\0')
 		++i;
-	printf("string size: '%d'.\n", size);fflush(stdout);
 	return (printer->write(printer, s, i));
 }
 
 static int	ft_tools_putwstr(t_printer *printer, const void *str, size_t size)
 {
 	const wchar_t	*ws = (const wchar_t*)str;
-	char			*buff;
+	char			buff[4];
 	int				f_ret;
 	int				written;
 	size_t			i;
@@ -31,9 +29,9 @@ static int	ft_tools_putwstr(t_printer *printer, const void *str, size_t size)
 	{
 		if ((f_ret = ft_wctomb(buff, ws[i])) < 1)
 			return (EFORMAT);
-		if (written + f_ret > size)
+		if ((written += f_ret) > size)
 			return (written - f_ret);
-		f_ret = printer->write(printer, (const char*)ws + written, f_ret);
+		f_ret = printer->write(printer, buff, f_ret);
 		if (f_ret < 0)
 			return (f_ret);
 		++i;
