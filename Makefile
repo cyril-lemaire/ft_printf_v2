@@ -15,7 +15,8 @@ NAME :=			libftprintf.a
 
 FLAGS := -Wall -Wextra -Werror
 
-CC := gcc
+CCS := (gcc clang tcc)
+CC := clang
 
 SRC := ./
 INCLUDES := ./

@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <stdio.h>	// DEbug only
+#include <stdio.h>	// Debug only
 
 static int	ft_read_flag(const char *format, t_printer *printer)
 {
@@ -20,6 +20,32 @@ static int	ft_read_flag(const char *format, t_printer *printer)
 		printer->flags.zero = ++read_size;
 	else if (format[0] == ' ')
 		printer->flags.space = ++read_size;
+	return (read_size);
+}
+
+static int	ft_read_flags(const char *format, t_printer *printer)
+{
+	int		read_size;
+	int		*flag_ptr;
+
+	read_size = 0;
+	while (1)
+	{
+		if (format[read_size] == '-')
+			flag_ptr = &(printer->flags.minus);
+		else if (format[read_size] == '+')
+			flag_ptr = &(printer->flags.plus);
+		else if (format[read_size] == '#')
+			flag_ptr = &(printer->flags.hash);
+		else if (format[read_size] == '0')
+			flag_ptr = &(printer->flags.zero);
+		else if (format[read_size] == ' ')
+			flag_ptr = &(printer->flags.space);
+		else
+			break ;
+		*flag_ptr = 1;
+		++read_size;
+	}
 	return (read_size);
 }
 
@@ -49,6 +75,8 @@ static int		ft_read_prec(const char *format, t_printer *printer)
 	if (format[1] == '*')
 	{
 		printer->prec = va_arg(*printer->args, int);
+		if (printer->prec < 0)
+			printer->prec = -printer->prec;
 		return (1);
 	}
 	return (1 + ft_tools_atoi(format + 1, &printer->prec));
@@ -84,23 +112,25 @@ int		ft_convert(const char *format, t_printer *printer)
 	int		read_size;
 	int		f_ret;
 
+	ft_bzero(&printer->flags, sizeof(printer->flags));/*
 	read_size = 1;
-	ft_bzero(&printer->flags, sizeof(printer->flags));
 	while ((f_ret = ft_read_flag(format + read_size, printer)) > 0)
-		read_size += f_ret;
+		read_size += f_ret;*/
+	read_size = 1 + ft_read_flags(format + 1, printer);
+#ifdef FT_PRINTF_DEBUG
+#endif
 	read_size += ft_read_width(format + read_size, printer);
 	read_size += ft_read_prec(format + read_size, printer);
 	read_size += ft_read_size(format + read_size, printer);
 	if ((printer->type = format[read_size]) != '\0')
 		++read_size;
 #ifdef FT_PRINTF_DEBUG
-	printf("\nFlags: -%d +%d z%d s%d #%d\n",
-		  printer->flags.minus,
-		  printer->flags.plus,
-		  printer->flags.zero,
-		  printer->flags.space,
-		  printer->flags.hash
-		  );fflush(stdout);
+	printf("\nFlags: %c%c%c%c%c\n",
+		   printer->flags.minus ? '-' : ' ',
+		   printer->flags.plus ? '+' : ' ',
+		   printer->flags.space ? 's' : ' ',
+		   printer->flags.zero ? '0' : ' ',
+		   printer->flags.hash ? '#' : ' '); fflush(stdout);
 	printf("\nWidth: %s (%d)\n", printer->flags.width ? "Yes" : "No",
 		   printer->width);fflush(stdout);
 	printf("\nPrecision: %s (%d)\n", printer->flags.prec ? "Yes" : "No",

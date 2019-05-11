@@ -11,6 +11,7 @@
 #include <string.h>
 #include <limits.h>
 #include <wchar.h>
+#include <locale.h>
 
 int		test_print(const char *format, ...)
 {
@@ -39,23 +40,41 @@ int		test_print(const char *format, ...)
 	return (res);
 }
 
+int		putwc_repr(char *wc_repr)
+{
+	wchar_t	wc;
+	int		i;
+
+	wc = *(wchar_t*)wc_repr & 0x1FFFFF;	// Select only interesting chars
+	return (printf("%hd %hd %hd %hd", (char)wc_repr[0], (char)wc_repr[1], (char)wc_repr[2], (char)wc_repr[3]));
+	return (printf("%02X %02X %02X %02X", (unsigned)wc_repr[0], (unsigned)wc_repr[1], (unsigned)wc_repr[2], (unsigned)wc_repr[3]));
+}
+
 int		test_wctomb(wchar_t wc)
 {
 	char		cs[MB_CUR_MAX];
 	char		c2s[MB_CUR_MAX];
 	int			len;
 
-	printf("Testing wctomb('%C')", wc);fflush(stdout);
-	
-	printf("\nExp:\t|"); fflush(stdout);
+	printf("Testing wctomb('%C') => repr [", wc);fflush(stdout);
+	putwc_repr((char*)&wc);
+	printf("]\nExp:\t|"); fflush(stdout);
 	len = wctomb(cs, wc);
 	if (len > 0)
-		printf("%.*s", len, cs);
-	printf("| => %d", len);
+	{
+		printf("%.*s\trepr [", len, cs); fflush(stdout);
+		putwc_repr(cs);
+		printf("]\n"); fflush(stdout);
+	}
+	printf("| => %d\n", len);
 	printf("\nYou:\t|"); fflush(stdout);
 	len = ft_wctomb(c2s, wc);
 	if (len > 0)
-		printf("%.*s", len, c2s);
+	{
+		printf("%.*s\trepr [", len, c2s); fflush(stdout);
+		putwc_repr(c2s);
+		printf("]\n"); fflush(stdout);
+	}
 	printf("| => %d\n\n", len); fflush(stdout);
 	return (len);
 }
@@ -76,9 +95,12 @@ int		main(int argc, char **argv)
 	wchar_t		c;
 	wchar_t		c2;
 
+	setlocale(LC_ALL, "en_GB.UTF-8");
+	printf("locale: %s\n", setlocale(LC_ALL, NULL));
 	test_wctomb(L'L');
 	test_wctomb(L'€');
 	test_wctomb(L'\u20AC');
+	test_wctomb(L'\x20AC');
 	test_print("Hello, World!");
 	test_print("number: '%d'!", 3);
 	test_print("string: '%s'", "Hello, World!");
@@ -117,8 +139,9 @@ int		main(int argc, char **argv)
 
 	test_print("% %");
 	test_print("%*d", 5, 42);
-/*	test_print("%p", &i);
+	test_print("%p", &i);
 	test_print("%C", c);
-	test_print(NULL);*/
+	test_print(NULL);
+*/
 	return (0);
 }

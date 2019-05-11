@@ -5,7 +5,7 @@
 #include "t_vsnprinter.h"
 #include <stddef.h>
 #include <stdarg.h>
-#include <stdlib.h>	// debug
+#include <stdlib.h>	// Debug only
 
 int				ft_vdprintf(int fd, const char *format, va_list args)
 {
@@ -32,7 +32,7 @@ int				ft_vdprintf(int fd, const char *format, va_list args)
 	free(formatted);
 	return (ret_val);
 }
-/**/
+*/
 int				ft_vasprintf(char **dstp, const char *format, va_list args)
 {
 	t_vasprinter	*printer;

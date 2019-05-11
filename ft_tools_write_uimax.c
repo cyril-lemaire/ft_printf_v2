@@ -64,7 +64,7 @@ int					ft_write_uimax(t_printer *printer, uintmax_t n,
 						int is_neg, const char *base_repr)
 {
 	const char  filler = printer->flags.zero
-		&& !printer->flags.minus ? '0' : ' ';
+		&& !(printer->flags.prec || printer->flags.minus) ? '0' : ' ';
 	const char	sign = ft_get_sign(printer, is_neg);
 	const int	n_len = (int)ft_max(printer->flags.prec ?
 		printer->prec : 0, ft_uimaxlen(n, ft_strlen(base_repr)));
@@ -76,7 +76,9 @@ int					ft_write_uimax(t_printer *printer, uintmax_t n,
 	printer->width = (int)ft_max(printer->flags.width ?
 		printer->width : 0, n_len + (sign != '\0'));
 	filler_len = printer->width - n_len - (sign != '\0');
+#ifdef FT_PRINTF_DEBUG
 	printf("width: %d, len: %d, filler: %d\n", printer->width, n_len, filler_len);fflush(stdout);
+#endif
     ret_val = 0;
 	if (!printer->flags.minus && filler_len > 0 && filler == ' ')
         ret_val += printer->repeat(printer, filler, filler_len);
