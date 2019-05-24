@@ -45,8 +45,8 @@ int							ft_write_conversion(t_printer *printer)
 	while (PRINTF_TYPES[i] != '\0')
 	{
 		if (printer->type == PRINTF_TYPES[i])
-			return (((f_ret = funcs[i](printer)) < 0) ? -2 : f_ret);
+			return (funcs[i](printer));
 		++i;
 	}
-	return (EALLOC);
+	return (EFORMAT);
 }

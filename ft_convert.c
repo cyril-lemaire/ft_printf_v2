@@ -140,5 +140,7 @@ int		ft_convert(const char *format, t_printer *printer)
 #endif
 	if ((f_ret = ft_write_conversion(printer)) > 0)
 		printer->written += f_ret;
+	else if (f_ret == ECONV)
+		
 	return ((f_ret >= 0) ? read_size : f_ret);
 }

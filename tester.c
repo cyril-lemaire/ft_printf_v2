@@ -40,14 +40,15 @@ int		test_print(const char *format, ...)
 	return (res);
 }
 
-int		putwc_repr(char *wc_repr)
+int		putwc_repr(void *wc_repr, int wc_len)
 {
-	wchar_t	wc;
+	char	*wc;
 	int		i;
 
-	wc = *(wchar_t*)wc_repr & 0x1FFFFF;	// Select only interesting chars
-	return (printf("%hd %hd %hd %hd", (char)wc_repr[0], (char)wc_repr[1], (char)wc_repr[2], (char)wc_repr[3]));
-	return (printf("%02X %02X %02X %02X", (unsigned)wc_repr[0], (unsigned)wc_repr[1], (unsigned)wc_repr[2], (unsigned)wc_repr[3]));
+	wc = (char*)wc_repr;
+	for (i = 0; i < wc_len; ++i)
+		printf("%X", wc[i]); fflush(stdout);
+	return (1);
 }
 
 int		test_wctomb(wchar_t wc)
@@ -56,24 +57,24 @@ int		test_wctomb(wchar_t wc)
 	char		c2s[MB_CUR_MAX];
 	int			len;
 
-	printf("Testing wctomb('%C') => repr [", wc);fflush(stdout);
-	putwc_repr((char*)&wc);
-	printf("]\nExp:\t|"); fflush(stdout);
+	cs[MB_CUR_MAX - 1] = c2s[MB_CUR_MAX - 1] = -1;
+	printf("Testing wctomb('%C'):\n", wc);fflush(stdout);
+	printf("\nExp:\t|"); fflush(stdout);
+	bzero(cs, MB_CUR_MAX);
+	bzero(c2s, MB_CUR_MAX);
 	len = wctomb(cs, wc);
 	if (len > 0)
 	{
-		printf("%.*s\trepr [", len, cs); fflush(stdout);
-		putwc_repr(cs);
-		printf("]\n"); fflush(stdout);
+		printf("%.*s\thex: %X", len, cs, *(wchar_t*)cs);
+		fflush(stdout);
 	}
 	printf("| => %d\n", len);
 	printf("\nYou:\t|"); fflush(stdout);
 	len = ft_wctomb(c2s, wc);
 	if (len > 0)
 	{
-		printf("%.*s\trepr [", len, c2s); fflush(stdout);
-		putwc_repr(c2s);
-		printf("]\n"); fflush(stdout);
+		printf("%.*s\thex: %X", len, c2s, *(wchar_t*)c2s);
+		fflush(stdout);
 	}
 	printf("| => %d\n\n", len); fflush(stdout);
 	return (len);
@@ -86,23 +87,38 @@ int		test_wctomb(wchar_t wc)
 %04.3i 42 == | 042|
 %04.2i 42 == |  42|
 */
-
 int		main(int argc, char **argv)
 {
 	int			i;
+	unsigned	u;
 	char		s[BUFF_SIZE];
 	wchar_t		wcs[BUFF_SIZE];
 	wchar_t		c;
 	wchar_t		c2;
-
 	setlocale(LC_ALL, "en_GB.UTF-8");
 	printf("locale: %s\n", setlocale(LC_ALL, NULL));
+
+//	printf("Sizes: char %zd\tint %zd\twchar_t %zd\tlong long %zd\n", sizeof(char), sizeof(int), sizeof(wchar_t), sizeof(long long));
+
+	printf("\n");
+	for (i = 0; i < 10; ++i)
+	{
+		u = (unsigned)(unsigned char)(0xF00 >> i);
+		ft_printf("%u\t%08b\n", u, u);
+	}
+	fflush(stdout);
 	test_wctomb(L'L');
-	test_wctomb(L'€');
-	test_wctomb(L'\u20AC');
-	test_wctomb(L'\x20AC');
+	test_wctomb(L'\x20AC');	// €
+	test_wctomb(L'\x00C6');	// Æ
+	test_wctomb(L'\x0270');	// ɰ
+	test_wctomb(L'\x0460');	// Ѡ
+	test_wctomb(L'\x18B0');	// ᢰ
+	test_wctomb(L'\xFFE5');	// ￥
 	test_print("Hello, World!");
 	test_print("number: '%d'!", 3);
+	test_print("char: '%c'!", 'c');
+	test_print("overflow char: '%c'!", 'c' + 256);
+	test_print("overflow char: '%d'!", (char)('c' + 256));
 	test_print("string: '%s'", "Hello, World!");
 	test_print("strings: '%s', '%s'", "Hello", "World!");
 	test_print("size 4: '%4s'", "precision");
@@ -130,6 +146,9 @@ int		main(int argc, char **argv)
 	test_print("%4.3i", 42);
 	test_print("%04.3i", 42);
 	test_print("%04.2i", 42);
+	test_print("% Zoooo");
+	test_print("{%S}", NULL);
+	test_print("%-5.3s", "LYDI");
 	test_print("%-5.3s", "LYDI");
 /*
 	i = 10;

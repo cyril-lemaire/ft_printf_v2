@@ -5,9 +5,9 @@
 # include <stddef.h>
 # include <stdint.h>
 # define PRINTF_TYPES "%diuboxXcCsSpfgGaAB"
-# define EALLOC -1
-# define EWRITE -2
-# define EFORMAT -3
+# define EALLOC		-1
+# define EWRITE		-2
+# define EFORMAT	-3
 //#define FT_PRINTF_DEBUG
 
 int			ft_printf(const char *format, ...);

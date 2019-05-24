@@ -81,7 +81,7 @@ int			ft_write_s(t_printer *printer)
 	char				*arg;
 	size_t				str_len;
 
-	if (ft_strchr("lwL", printer->size) != NULL && printer->size != '\0')
+	if (printer->size != '\0' && ft_strchr("lwL", printer->size) != NULL)
 		return (ft_write_S(printer));
 	arg = va_arg(*printer->args, char*);
 	if (arg == NULL)
@@ -96,21 +96,24 @@ int			ft_write_s(t_printer *printer)
 int			ft_write_S(t_printer *printer)
 {
 	wchar_t				*arg;
-	size_t				i;
 	size_t				str_len;
+	size_t				i;
 	int					wchar_len;
 
 	arg = va_arg(*printer->args, wchar_t*);
-	i = 0;
 	str_len = 0;
-	while (arg[i] != L'\0')
+	if (arg != NULL)
 	{
-		wchar_len = ft_wclen(arg[i++]);
-		if (wchar_len < 1)
-			return (EFORMAT);
-		if (printer->flags.prec && str_len + wchar_len >= printer->prec)
-			break;
-		str_len += wchar_len;
+		i = 0;
+		while (arg[i] != L'\0')
+		{
+			wchar_len = ft_wclen(arg[i++]);
+			if (wchar_len < 1)
+				return (EFORMAT);
+			if (printer->flags.prec && str_len + wchar_len >= printer->prec)
+				break ;
+			str_len += wchar_len;
+		}
 	}
 	return (ft_tools_write_str(printer, arg, str_len, ft_tools_putwstr));
 }
