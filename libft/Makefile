@@ -10,119 +10,131 @@
 #                                                                              #
 #******************************************************************************#
 
-LIBNAME = ft
+LIBNAME =	ft
 
-SRC = ft_atoi.c			\
-	ft_bzero.c			\
-	ft_isalnum.c		\
-	ft_isalpha.c		\
-	ft_isascii.c		\
-	ft_isdigit.c		\
-	ft_isprint.c		\
-	ft_memccpy.c		\
-	ft_memchr.c			\
-	ft_memcmp.c			\
-	ft_memcpy.c			\
-	ft_memmove.c		\
-	ft_memset.c			\
-	ft_strcat.c			\
-	ft_strchr.c			\
-	ft_strcmp.c			\
-	ft_strcpy.c			\
-	ft_strdup.c			\
-	ft_strlcat.c		\
-	ft_strlen.c			\
-	ft_strncat.c		\
-	ft_strncmp.c		\
-	ft_strncpy.c		\
-	ft_strnstr.c		\
-	ft_strrchr.c		\
-	ft_strstr.c			\
-	ft_tolower.c		\
-	ft_toupper.c		\
-	ft_memalloc.c		\
-	ft_memdel.c			\
-	ft_strnew.c			\
-	ft_strdel.c			\
-	ft_strclr.c			\
-	ft_striter.c		\
-	ft_striteri.c		\
-	ft_strmap.c			\
-	ft_strmapi.c		\
-	ft_strequ.c			\
-	ft_strnequ.c		\
-	ft_strsub.c			\
-	ft_strjoin.c		\
-	ft_strtrim.c		\
-	ft_itoa.c			\
-	ft_strsplit.c		\
-	ft_putchar.c		\
-	ft_putstr.c			\
-	ft_putendl.c		\
-	ft_putnbr.c			\
-	ft_putchar_fd.c		\
-	ft_putstr_fd.c		\
-	ft_putendl_fd.c		\
-	ft_putnbr_fd.c		\
-	ft_lstnew.c			\
-	ft_lstnew_nocp.c	\
-	ft_lstdelone.c		\
-	ft_lstdel.c			\
-	ft_lstadd.c			\
-	ft_lstiter.c		\
-	ft_lstmap.c			\
-	ft_isspace.c		\
-	ft_mod.c			\
-	ft_abs.c			\
-	ft_lstcpy.c			\
-	ft_lstappend.c		\
-	ft_lstdelnext.c		\
-	ft_lstgetindex.c	\
-	ft_lstdelindex.c	\
-	ft_min.c			\
-	ft_max.c			\
-	ft_realloc.c		\
-	ft_stracat.c		\
-	ft_stradd.c			\
-	ft_wcslen.c			\
-	ft_wctomb.c			\
+CC = 		gcc
+CFLAGS =	-Wall -Wextra -Werror # -O3
 
-OBJ = ${SRC:.c=.o}
+SRC_DIR =		srcs
+BIN_DIR =		bin
+STATIC_DIR =	${BIN_DIR}/static
+SHARED_DIR =	${BIN_DIR}/shared
+INCL_DIR =		.
 
-SRC_FOLDER = .
+SRC_NAMES = atoi			\
+			bzero			\
+			isalnum			\
+			isalpha			\
+			isascii			\
+			isdigit			\
+			isprint			\
+			memccpy			\
+			memchr			\
+			memcmp			\
+			memcpy			\
+			memmove			\
+			memset			\
+			strcat			\
+			strchr			\
+			strcmp			\
+			strcpy			\
+			strdup			\
+			strlcat			\
+			strlen			\
+			strncat			\
+			strncmp			\
+			strncpy			\
+			strnstr			\
+			strrchr			\
+			strstr			\
+			tolower			\
+			toupper			\
+			memalloc		\
+			memdel			\
+			strnew			\
+			strdel			\
+			strclr			\
+			striter			\
+			striteri		\
+			strmap			\
+			strmapi			\
+			strequ			\
+			strnequ			\
+			strsub			\
+			strjoin			\
+			strtrim			\
+			itoa			\
+			strsplit		\
+			putchar			\
+			putstr			\
+			putendl			\
+			putnbr			\
+			putchar_fd		\
+			putstr_fd		\
+			putendl_fd		\
+			putnbr_fd		\
+			lstnew			\
+			lstnew_nocp		\
+			lstdelone		\
+			lstdel			\
+			lstadd			\
+			lstiter			\
+			lstmap			\
+			isspace			\
+			mod				\
+			abs				\
+			lstcpy			\
+			lstappend		\
+			lstdelnext		\
+			lstgetindex		\
+			lstdelindex		\
+			min				\
+			max				\
+			realloc			\
+			stracat			\
+			stradd			\
+			wcslen			\
+			wctomb			\
 
-CFLAGS = -Wall -Wextra -Werror # -O3
+SRC = ${SRC_NAMES:%=${SRC_DIR}/ft_%.c}
+STATIC_OBJ = ${SRC_NAMES:%=${STATIC_DIR}/ft_%.o}
+SHARED_OBJ = ${SRC_NAMES:%=${SHARED_DIR}/ft_%.o}
 
-.PHONY: all a so clean fclean reclean re obj nobj soflags
+# OBJ = ${SRC:.c=.o}
 
 all: lib${LIBNAME}.a
 
-obj: ${OBJ}
+${STATIC_DIR}:
+	mkdir -p $@
 
-%.o: %.c
-	gcc -c -fPIC ${CFLAGS} -I${SRC_FOLDER} -o $@ $<
+${SHARED_DIR}:
+	mkdir -p $@
+
+${STATIC_DIR}/%.o: ${SRC_DIR}/%.c
+	${CC} -c ${CFLAGS} -I${INCL_DIR} -o $@ $<
+
+${SHARED_DIR}/%.o: ${SRC_DIR}/%.c
+	${CC} -c -fPIC ${CFLAGS} -I${INCL_DIR} -o $@ $<
 
 a: lib${LIBNAME}.a
 
 so: lib${LIBNAME}.so
 
-lib${LIBNAME}.a: ${OBJ}
-	@echo '@ar rcs lib${LIBNAME}.a [OBJ FILES]'
-	@ar rcs lib${LIBNAME}.a ${OBJ}
+lib${LIBNAME}.a: ${STATIC_DIR} ${STATIC_OBJ}
+	ar rcs $@ ${?:$<=}
 
-lib${LIBNAME}.so: ${OBJ}
-	@echo '@gcc -shared -o lib${LIBNAME}.so [OBJ FILES]'
-	@gcc -shared ${CFLAGS} -o lib${LIBNAME}.so ${OBJ}
+lib${LIBNAME}.so: ${SHARED_DIR} ${SHARED_OBJ}
+	${CC} -shared ${CFLAGS} -o lib${LIBNAME}.so ${?:$<=}
 
 clean:
-	@echo "@rm -f [OBJ FILES]"
-	@rm -f ${OBJ}
+	@echo "@rm -f [STATIC OBJ]"
+	@rm -f ${STATIC_OBJ}
+	@echo "@rm -f [SHARED OBJ]"
+	@rm -f ${SHARED_OBJ}
 
 fclean: clean
 	rm -f lib${LIBNAME}.a lib${LIBNAME}.so
 
-reclean:
-	@echo "@rm -f [OBJ FILES]"
-	@rm -f ${OBJ}
-
 re: fclean all
+
+.PHONY: all a so clean fclean reclean re obj nobj
