@@ -5,17 +5,22 @@
 # include <stddef.h>
 # include <stdint.h>
 # define PRINTF_TYPES "%diuboxXcCsSpfgGaAB"
-# define EALLOC -1
-# define EWRITE -2
-# define EFORMAT -3
+# define EALLOC		-1
+# define EWRITE		-2
+# define EFORMAT	-3
+/*
+** #define FT_PRINTF_DEBUG
+*/
 
 int			ft_printf(const char *format, ...);
 int			ft_dprintf(int fd, const char *format, ...);
 int			ft_vprintf(const char *format, va_list args);
 int			ft_vdprintf(int fd, const char *format, va_list args);
+int			ft_asprintf(char **dstp, const char *format, ...);
+int			ft_vasprintf(char **dstp, const char *format, va_list args);
 int			ft_print(const char *format, t_printer *printer);
-int			ft_format(const char *format, t_printer *printer);
-int			ft_write_format(t_printer *printer);
+int			ft_convert(const char *format, t_printer *printer);
+int			ft_write_conversion(t_printer *printer);
 uintmax_t	ft_imaxabs(intmax_t n);
 int			ft_tools_atoi(const char *str, int *ans);
 int			ft_write_uimax(t_printer *printer, uintmax_t n, int is_neg,

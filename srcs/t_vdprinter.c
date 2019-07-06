@@ -68,11 +68,12 @@ static char*	ft_vdprinter_alloc(void *raw_this, size_t size)
 	char				*dst;
 
 	if (size > BUFF_SIZE)
-		return (NULL);
+		return (ft_printer_alloc(raw_this, size));
 	if (size > BUFF_SIZE - this->index)
 		this->super.flush(this);
 	dst = this->mem + this->index;
 	this->index += size;
+	this->super.alloc_size = size;
 	return (dst);
 }
 
@@ -83,7 +84,7 @@ int				ft_vdprinter_init(t_vdprinter *printer, int fd, va_list *args)
 	ft_printer_init(&(printer->super), args);
 	printer->super.write = ft_vdprinter_write;
 	printer->super.repeat = ft_vdprinter_repeat;
-	printer->super.private_alloc = ft_vdprinter_alloc;
+	printer->super.alloc = ft_vdprinter_alloc;
 	printer->super.flush = ft_vdprinter_flush;
 	printer->fd = fd;
 	printer->index = 0;

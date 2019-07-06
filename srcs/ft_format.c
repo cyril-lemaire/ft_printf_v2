@@ -92,7 +92,7 @@ int		ft_format(const char *format, t_printer *printer)
 	read_size += ft_read_size(format + read_size, printer);
 	if ((printer->type = format[read_size]) != '\0')
 		++read_size;
-	if ((f_ret = ft_write_format(printer)) > 0)
+	if ((f_ret = ft_write_conversion(printer)) > 0)
 		printer->written += f_ret;
 	return ((f_ret >= 0) ? read_size : f_ret);
 }

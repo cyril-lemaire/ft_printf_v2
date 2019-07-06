@@ -26,6 +26,8 @@ OBJ_DIR :=		bin
 INCL_DIR :=		includes
 
 SRC_NAMES :=	ft_printf_family		\
+				ft_convert				\
+				ft_write_conversion		\
 				ft_printf_family_2		\
 				ft_print				\
 				ft_format				\

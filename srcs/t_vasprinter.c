@@ -21,7 +21,7 @@ static int		ft_vasprinter_flush(void *raw_this)
 		ft_memcpy(*(this->dstp) + i, node->content, BUFF_SIZE);
 		i += BUFF_SIZE;
 	}
-	ft_memcpy(*(this->dstp) + i, node->content, this->index);
+	ft_memcpy(*this->dstp + i, node->content, this->index);
 	*this->dstp[i + this->index] = '\0';
 	return (1);
 }
@@ -72,9 +72,10 @@ static char*	ft_vasprinter_alloc(void *raw_this, size_t size)
 	size_t					capacity;
 
 	if (size > (capacity = BUFF_SIZE - this->index))
-		return (NULL);
+		return (ft_printer_alloc(raw_this, size));
 	dst = this->mem->content + this->index;
 	this->index += size;
+	this->super.alloc_size = size;
 	return (dst);
 }
 
@@ -92,7 +93,7 @@ int				ft_vasprinter_init(t_vasprinter *printer, char **dstp,
 	ft_printer_init(&(printer->super), args);
 	printer->super.write = ft_vasprinter_write;
 	printer->super.repeat = ft_vasprinter_repeat;
-	printer->super.private_alloc = ft_vasprinter_alloc;
+	printer->super.alloc = ft_vasprinter_alloc;
 	printer->super.flush = ft_vasprinter_flush;
 	printer->dstp = dstp;
 	printer->del = ft_vasprinter_del;

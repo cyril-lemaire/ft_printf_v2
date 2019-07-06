@@ -13,14 +13,14 @@ typedef void	(*t_printer_del)(void *raw_this);
 
 typedef struct	s_flags
 {
-	int			minus;
-	int			plus;
-	int			zero;
-	int			space;
-	int			hash;
-	int			prec;
-	int			width;
-	int			apos;
+	int		minus;
+	int		plus;
+	int		zero;
+	int		space;
+	int		hash;
+	int		prec;
+	int		width;
+	int		apos;
 }				t_flags;
 
 typedef struct	s_printer
@@ -36,7 +36,6 @@ typedef struct	s_printer
 	t_printer_write		write;
 	t_printer_repeat	repeat;
 	t_printer_alloc		alloc;
-	t_printer_alloc		private_alloc;
 	t_printer_endalloc	endalloc;
 	t_printer_flush		flush;
 	t_printer_del		private_del;
@@ -44,7 +43,11 @@ typedef struct	s_printer
 }				t_printer;
 
 typedef int		(*t_printer_ft)(t_printer *printer);
+typedef int		(*t_printer_putstr)(t_printer *printer, const void *str,
+					size_t size);
 
 int			ft_printer_init(t_printer *printer, va_list *args);
+char*		ft_printer_alloc(void *raw_this, size_t size);
+int			ft_printer_endalloc(void *raw_this);
 
 #endif
