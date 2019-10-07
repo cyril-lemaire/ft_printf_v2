@@ -106,6 +106,7 @@ int		main(int argc, char **argv)
 		u = (unsigned)(unsigned char)(0xF00 >> i);
 		ft_printf("%u\t%08b\n", u, u);
 	}
+	test_print("%-#10.0o", 0);
 	fflush(stdout);
 	test_wctomb(L'L');
 	test_wctomb(L'\x20AC');	// €

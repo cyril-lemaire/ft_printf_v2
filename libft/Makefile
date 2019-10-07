@@ -10,18 +10,19 @@
 #                                                                              #
 #******************************************************************************#
 
-LIBNAME =	ft
+LIBNAME :=	ft
 
-CC = 		gcc
-CFLAGS =	-Wall -Wextra -Werror # -O3
+CC := 		gcc
+CFLAGS :=	-Wall -Wextra -Werror # -O3
 
-SRC_DIR =		srcs
-BIN_DIR =		bin
-STATIC_DIR =	${BIN_DIR}/static
-SHARED_DIR =	${BIN_DIR}/shared
-INCL_DIR =		.
+SRC_DIR :=		srcs
+BIN_DIR :=		bin
+STATIC_DIR :=	${BIN_DIR}/static
+SHARED_DIR :=	${BIN_DIR}/shared
+TEST_DIR :=		asserts
+INCL_DIR :=		.
 
-SRC_NAMES = atoi			\
+FT_NAMES :=	atoi			\
 			bzero			\
 			isalnum			\
 			isalpha			\
@@ -96,40 +97,41 @@ SRC_NAMES = atoi			\
 			wcslen			\
 			wctomb			\
 
-SRC = ${SRC_NAMES:%=${SRC_DIR}/ft_%.c}
-STATIC_OBJ = ${SRC_NAMES:%=${STATIC_DIR}/ft_%.o}
-SHARED_OBJ = ${SRC_NAMES:%=${SHARED_DIR}/ft_%.o}
+SRC := ${FT_NAMES:%=${SRC_DIR}/ft_%.c}
+STATIC_OBJ := ${FT_NAMES:%=${STATIC_DIR}/ft_%.o}
+SHARED_OBJ := ${FT_NAMES:%=${SHARED_DIR}/ft_%.o}
 
 # OBJ = ${SRC:.c=.o}
 
+TEST_FILES := ${TEST_DIR}/test_strlen.c# ${FT_NAMES:%=${TEST_DIR}/test_%.c}
+
 all: lib${LIBNAME}.a
 
-${STATIC_DIR}:
-	mkdir -p $@
-
-${SHARED_DIR}:
-	mkdir -p $@
-
 ${STATIC_DIR}/%.o: ${SRC_DIR}/%.c
+	@mkdir -p ${dir $@}
 	${CC} -c ${CFLAGS} -I${INCL_DIR} -o $@ $<
 
 ${SHARED_DIR}/%.o: ${SRC_DIR}/%.c
+	mkdir -p ${dir $@}
 	${CC} -c -fPIC ${CFLAGS} -I${INCL_DIR} -o $@ $<
 
 a: lib${LIBNAME}.a
 
 so: lib${LIBNAME}.so
 
-lib${LIBNAME}.a: ${STATIC_DIR} ${STATIC_OBJ}
-	ar rcs $@ ${?:$<=}
+lib${LIBNAME}.a: ${STATIC_OBJ}
+	ar rcs $@ $?
 
-lib${LIBNAME}.so: ${SHARED_DIR} ${SHARED_OBJ}
-	${CC} -shared ${CFLAGS} -o lib${LIBNAME}.so ${?:$<=}
+lib${LIBNAME}.so: ${SHARED_OBJ}
+	${CC} -shared ${CFLAGS} -o lib${LIBNAME}.so $?
+
+test: lib${LIBNAME}.a ${TEST_FILES}
+	${CC} ${CFLAGS} -I${INCL_DIR} -I/usr/include/criterion -lcriterion -o $@ $^
 
 clean:
-	@echo "@rm -f [STATIC OBJ]"
+	@echo '@rm -f [STATIC OBJ]'
 	@rm -f ${STATIC_OBJ}
-	@echo "@rm -f [SHARED OBJ]"
+	@echo '@rm -f [SHARED OBJ]'
 	@rm -f ${SHARED_OBJ}
 
 fclean: clean

@@ -38,7 +38,7 @@ static int		ft_vasprinter_write(void *raw_this, const char *s, size_t size)
 		ft_memcpy(this->mem->content + this->index, s + i, capacity);
 		i += capacity;
 		if (!this->private_memadd(this))
-			return(EALLOC);
+			return (EALLOC);
 	}
 	ft_memcpy(this->mem->content + this->index, s + i, size - i);
 	this->index += size - i;
